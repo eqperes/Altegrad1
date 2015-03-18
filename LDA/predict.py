@@ -24,15 +24,17 @@ def predict(X, projected_centroid, W):
     num, dim = projected_data.shape
     classNum, dim = projected_centroid.shape
 
+
     for i in range(0, num):
         distances = []
         for j in range(0, classNum):
             distances.append(np.linalg.norm(projected_data[i,:] - projected_centroid[j,:]))
         label.append(np.argmin(distances))
+
     
-    
+    label =  np.array(label)
     
     # =============================================================
 
     # Return the predicted labels of the test data X
-    return np.array(label)
+    return label

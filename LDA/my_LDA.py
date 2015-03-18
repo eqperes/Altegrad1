@@ -39,8 +39,12 @@ def my_LDA(X, Y):
     for j in range(0,classNum):
         Sb += Nj[j] * np.outer((Mj[j,:] - totalMean),(Mj[j,:] - totalMean))
 
+    St = np.zeros((dim,dim))
+    for i in range(0, datanum):
+        St += np.outer((X[i,:] - totalMean),(X[i,:] - totalMean))
+
     e_values, U = np.linalg.eig(inv(Sw).dot(Sb))
-    index_sort = max(np.argsort(e_values)) - np.argsort(e_values)
+    index_sort = np.argsort(e_values)[::-1]
     e_values = e_values[index_sort]
     U = U[:, index_sort]
 
@@ -51,8 +55,7 @@ def my_LDA(X, Y):
     W = np.real(W)
     X_lda = np.real(X_lda)
     projected_centroid = np.real(projected_centroid)
-    
-    
+
     # =============================================================
 
     return W, projected_centroid, X_lda
